@@ -4,14 +4,43 @@ import (
 	"fmt"
 )
 
-// Graph : asda
+// Graph : Data type for graphs
 type Graph struct {
 	Nodes []*Node
 }
 
-// Node : asdasda
+// Node : Data type for nodes
 type Node struct {
-	Key string
+	Key   string
+	Links []*Node
+}
+
+// ShowAllKeys : Show all keys
+func (graph *Graph) ShowAllKeys() {
+	for i := 0; i < len(graph.Nodes); i++ {
+		fmt.Println(graph.Nodes[i])
+	}
+}
+
+// addEdge : Add new links between nodes
+func (node *Node) addEdge(newNode *Node) {
+	// if edge already exists
+	for i := 0; i < len(node.Links); i++ {
+		if node.Links[i] != newNode {
+			node.Links = append(node.Links, newNode)
+		}
+	}
+	return
+}
+
+// addNode : Add new node to graph
+func (graph *Graph) addNode(newNode *Node) {
+	for i := 0; i < len(graph.Nodes); i++ {
+		if graph.Nodes[i] != newNode {
+			graph.Nodes = append(graph.Nodes, newNode)
+		}
+	}
+	return
 }
 
 func main() {
@@ -35,5 +64,5 @@ func main() {
 	graph = &Graph{
 		Nodes: nodes,
 	}
-	fmt.Println(graph.Nodes)
+	graph.ShowAllKeys()
 }
