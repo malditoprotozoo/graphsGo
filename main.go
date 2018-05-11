@@ -7,62 +7,52 @@ import (
 // Graph : Data type for graphs
 type Graph struct {
 	Nodes []*Node
+	Edges []*Edge
 }
 
 // Node : Data type for nodes
 type Node struct {
-	Key   string
-	Links []*Node
+	Key      string
+	LinkedTo []*Node
 }
 
-// ShowAllKeys : Show all keys
-func (graph *Graph) ShowAllKeys() {
-	for i := 0; i < len(graph.Nodes); i++ {
-		fmt.Println(graph.Nodes[i])
-	}
+// Edge : aksjsdlakj
+type Edge struct {
+	Start, End *Node
+	Cost       int
 }
 
-// addEdge : Add new links between nodes
-func (node *Node) addEdge(newNode *Node) {
-	// if edge already exists
-	for i := 0; i < len(node.Links); i++ {
-		if node.Links[i] != newNode {
-			node.Links = append(node.Links, newNode)
-		}
-	}
-	return
-}
-
-// addNode : Add new node to graph
+// addNode : Adds a node to the graph
 func (graph *Graph) addNode(newNode *Node) {
-	for i := 0; i < len(graph.Nodes); i++ {
-		if graph.Nodes[i] != newNode {
-			graph.Nodes = append(graph.Nodes, newNode)
-		}
+	newArr := make([]*Node, len(graph.Nodes)+1)
+	if len(graph.Nodes) == 0 {
+		newArr[0] = newNode
+		graph.Nodes = newArr
+		return
 	}
-	return
+	for i := 0; i < len(graph.Nodes); i++ {
+		newArr[i] = graph.Nodes[i]
+	}
+	newArr[len(graph.Nodes)] = newNode
+	graph.Nodes = newArr
+}
+
+// createNode : Creates and returns a new node
+func createNode(key string) *Node {
+	node := new(Node)
+	node = &Node{
+		Key: key,
+	}
+	return node
 }
 
 func main() {
-	a := new(Node)
-	a = &Node{
-		Key: "a",
-	}
-	b := new(Node)
-	b = &Node{
-		Key: "b",
-	}
-	c := new(Node)
-	c = &Node{
-		Key: "c",
-	}
-	nodes := make([]*Node, 3)
-	nodes[0] = a
-	nodes[1] = b
-	nodes[2] = c
 	graph := new(Graph)
-	graph = &Graph{
-		Nodes: nodes,
+	arr := [3]string{"a", "b", "c"}
+	for i := 0; i < len(arr); i++ {
+		graph.addNode(createNode(arr[i]))
 	}
-	graph.ShowAllKeys()
+	fmt.Println(graph.Nodes[0])
+	fmt.Println(graph.Nodes[1])
+	fmt.Println(graph.Nodes[2])
 }
