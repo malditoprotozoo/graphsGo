@@ -46,13 +46,35 @@ func createNode(key string) *Node {
 	return node
 }
 
+// createLink : Creates a single connection
+func (node *Node) createLink(link *Node) {
+	newArr := make([]*Node, len(node.LinkedTo)+1)
+	if len(node.LinkedTo) == 0 {
+		newArr[0] = link
+		node.LinkedTo = newArr
+		return
+	}
+	for i := 0; i < len(node.LinkedTo); i++ {
+		newArr[i] = node.LinkedTo[i]
+	}
+	newArr[len(node.LinkedTo)] = link
+	node.LinkedTo = newArr
+}
+
 func main() {
 	graph := new(Graph)
-	arr := [3]string{"a", "b", "c"}
+	// 								0,  1,		2,		3,	4,	5,	6
+	arr := [7]string{"a", "b", "c", "d", "e", "f", "g"}
 	for i := 0; i < len(arr); i++ {
 		graph.addNode(createNode(arr[i]))
 	}
-	fmt.Println(graph.Nodes[0])
-	fmt.Println(graph.Nodes[1])
-	fmt.Println(graph.Nodes[2])
+	connections := [7][]int{{1, 6}, {2, 4, 3}, {4}, {4}, {5}, {-1}, {3}}
+	for i := 0; i < len(graph.Nodes); i++ {
+		for j := 0; j < len(connections[i]); j++ {
+			if connections[i][j] > -1 {
+				graph.Nodes[i].createLink(graph.Nodes[connections[i][j]])
+			}
+		}
+	}
+	fmt.Println(graph.Nodes[0].LinkedTo[0].Key)
 }
