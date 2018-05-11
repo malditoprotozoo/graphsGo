@@ -63,7 +63,6 @@ func (node *Node) createLink(link *Node) {
 
 func main() {
 	graph := new(Graph)
-	// 								0,  1,		2,		3,	4,	5,	6
 	arr := [7]string{"a", "b", "c", "d", "e", "f", "g"}
 	for i := 0; i < len(arr); i++ {
 		graph.addNode(createNode(arr[i]))
