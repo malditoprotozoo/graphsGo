@@ -16,7 +16,7 @@ type Node struct {
 	LinkedTo []*Node
 }
 
-// Edge : aksjsdlakj
+// Edge : Data type for edges
 type Edge struct {
 	Start, End *Node
 	Cost       int
